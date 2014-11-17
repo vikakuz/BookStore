@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Книжный магазин</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_hint">Поиск</string>
+    <string name="text">Поиск книги</string>
+    <string name="add">Поиск</string>
+    <string name="no_records">Соответствий не найдено</string>
+    <string name="title_activity_full_info">Книга</string>
+    <string name="name_of_book_value">Название книги</string>
+    <string name="author_of_book_value">Автор книги</string>
+    <string name="description">Краткое описание:</string>
+    <string name="text_of_description">The impact of the search dialog on your activity lifecycle The impact of the search dialog on your activity
+        The impact of the search dialog on your activity lifecycle The impact of the search dialog on your actiThe impact of the search dialog on your activity lifecycle The impact of the search dialog on your actiThe impact of the search dialog on your activity lifecycle The impact of the search dialog on your actiThe impact of the search dialog on your activity lifecycle The impact of the search dialog on your acti
+
+        lifecycleThe impact of the search dialog on your activity lifecycleThe impact of the search dialog on your activity lifecycleThe impact of the search dialog on your activity lifecycleThe impact of the search dialog on your activity lifecycleThe impact of the search dialog on your activity lifecycleThe impact of the search dialog on your activity lifecycleThe impact of the search dialog on your activity lifecycle</string>
+    <string name="language">Язык: </string>
+    <string name="category_of_book">Жанр: </string>
+    <string name="btn_show_all_info">Детальная информация</string>
+    <string name="text_category_of_book_value">роман</string>
+    <string name="text_language_value">русский</string>
+    <string name="title_activity_test_api">TestAPIActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>

@@ -1,0 +1,208 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="0dp"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="ru.vsu.cs.app.bookstore.detailed_info_activity.FullInfoActivity"
+    android:background="@color/black">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="fill_horizontal">
+
+                <ImageView
+                    android:id="@+id/image_over"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:src="@android:drawable/ic_dialog_info"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:id="@+id/text_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="23sp"
+                        android:text="@string/name_of_book_value"
+                        android:textColor="@color/blue"
+                        />
+
+                    <TextView
+                    android:id="@+id/text_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:text="@string/author_of_book_value"
+                    android:textColor="@color/white"
+                    />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_language"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="@string/language"
+                            android:textColor="@color/gray"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_language_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="@string/text_language_value"
+                            android:textColor="@color/white"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_category_of_book"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+
+                            android:text="@string/category_of_book"
+                            android:textColor="@color/gray"
+                            />
+
+                        <TextView
+                            android:id="@+id/text_category_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:text="@string/text_category_of_book_value"
+                            android:textColor="@color/white"
+                            />
+                        </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_marginTop="5dp">
+
+                <ImageButton
+                    android:id="@+id/btn_buy"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/blue"
+                    android:text="Купить"
+                    android:src="@android:drawable/ic_menu_add"
+                    android:textColor="@color/black"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_favorite"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/blue"
+                    android:text="Добавить в избранное"
+                    android:src="@android:drawable/ic_menu_share"
+                    android:textColor="@color/black"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btn_detailed_info"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/blue"
+                    android:text="Полное описание"
+                    android:src="@android:drawable/ic_menu_info_details"
+                    android:textColor="@color/black"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="fill_horizontal"
+                android:layout_marginTop="8dp"
+                >
+
+                <TextView
+                    android:id="@+id/textDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/description"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/textOfDescription"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/text_of_description"
+                    android:textSize="13sp"
+                    android:maxLines="7"
+                    android:ellipsize="end"
+                    android:textColor="@color/gray"
+                    />
+
+                <Button
+                    android:id="@+id/btn_show_all_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/btn_show_all_info"
+                    android:textColor="@color/blue"
+                    android:background="@color/black"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
