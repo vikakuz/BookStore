@@ -24,18 +24,16 @@
 
             <EditText
                 android:id="@+id/text_search"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="9"
                 android:hint="@string/text"
                 android:textColor="@color/gray"
-                android:layout_weight="9"
-                android:inputType="textAutoCorrect"
-                android:focusableInTouchMode="true"
-                android:cursorVisible="true"/>
+                android:inputType="textAutoCorrect"/>
 
             <ImageButton
                 android:id="@+id/btn_search"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@android:drawable/ic_menu_search"
@@ -59,6 +57,7 @@
             />
 
         <ProgressBar
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

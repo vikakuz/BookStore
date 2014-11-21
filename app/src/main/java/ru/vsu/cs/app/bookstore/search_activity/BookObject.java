@@ -1,8 +1,7 @@
-package ru.vsu.cs.app.bookstore.search_activty;
+package ru.vsu.cs.app.bookstore.search_activity;
 
 import java.io.Serializable;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class BookObject implements Serializable {
     private int id,

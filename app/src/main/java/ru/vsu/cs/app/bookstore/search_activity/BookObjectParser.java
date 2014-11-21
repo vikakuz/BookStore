@@ -1,4 +1,4 @@
-package ru.vsu.cs.app.bookstore.search_activty;
+package ru.vsu.cs.app.bookstore.search_activity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

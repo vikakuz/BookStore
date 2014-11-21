@@ -1,4 +1,4 @@
-package ru.vsu.cs.app.bookstore.search_activty;
+package ru.vsu.cs.app.bookstore.search_activity;
 
 import android.app.Activity;
 import android.content.Context;

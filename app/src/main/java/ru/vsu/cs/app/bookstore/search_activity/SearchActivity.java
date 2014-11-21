@@ -1,9 +1,6 @@
-package ru.vsu.cs.app.bookstore.search_activty;
+package ru.vsu.cs.app.bookstore.search_activity;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,14 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import ru.vsu.cs.app.bookstore.R;
 
@@ -46,6 +35,9 @@ public class SearchActivity extends Activity {
 
         text_search = (EditText) findViewById(R.id.text_search);
         btn_search = (ImageButton) findViewById(R.id.btn_search);
+        statusAndInfo = (TextView) findViewById(R.id.text_empty);
+        records = (ListView) findViewById(R.id.list_data);
+        isLoading = (ProgressBar) findViewById(R.id.progress_bar);
        // records = (ListView) findViewById(R.id.list_data);
 
         text_search.setOnKeyListener(new View.OnKeyListener() {
@@ -84,7 +76,7 @@ public class SearchActivity extends Activity {
             @Override
             public void onClick(View v) {
                 statusAndInfo = (TextView) findViewById(R.id.text_empty);
-                if (!text_search.getText().toString().equals("Поиск книги")){
+                if (!text_search.getText().toString().toUpperCase().startsWith("ВВЕДИТЕ")){
                     booksAPIRequest = new GoogleBooksAPIRequest();
                     String[] params = text_search.getText().toString().split("\\s+");
                     booksAPIRequest.execute(params);
