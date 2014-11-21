@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,7 @@ public class SearchActivity extends Activity {
     private ImageButton btn_search;
     private TextView statusAndInfo;
     private ListView records;
+    private ProgressBar isLoading;
 
     private GoogleBooksAPIRequest booksAPIRequest;
 
@@ -44,10 +48,35 @@ public class SearchActivity extends Activity {
         btn_search = (ImageButton) findViewById(R.id.btn_search);
        // records = (ListView) findViewById(R.id.list_data);
 
-        text_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        text_search.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN
+                        && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    Log.i("event", "captured");
+                    statusAndInfo.setText("Введите слово для поиска");
+                    return false;
+                }
+
                 return false;
+            }
+        });
+
+        text_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                statusAndInfo.setText("Тект  не меняется");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                statusAndInfo.setText("Текст вводят...");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                statusAndInfo.setText("Текст ввели");
             }
         });
 
