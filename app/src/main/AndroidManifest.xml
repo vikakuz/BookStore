@@ -20,6 +20,11 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
@@ -28,16 +33,8 @@
         <activity
             android:name="ru.vsu.cs.app.bookstore.detailed_info_activity.FullInfoActivity"
             android:label="@string/title_activity_full_info" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="ru.vsu.cs.app.bookstore.favorites_activity.TestAPIActivity"
-            android:label="@string/title_activity_test_api" >
-        </activity>
     </application>
 
 </manifest>
