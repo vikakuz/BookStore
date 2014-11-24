@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -58,15 +60,17 @@ public class SearchActivity extends Activity {
         records = (ListView) findViewById(R.id.list_data);
         isLoading = (ProgressBar) findViewById(R.id.progress_bar);
 
-        btn_search.setOnClickListener(new View.OnClickListener() {
+        btn_search.setOnClickListener(new View.OnClickListener() {  //TODO неверно работает
             @Override
             public void onClick(View v) {
+                logOut(text_search.getText().toString());
                 if (!text_search.getText().toString().toUpperCase().startsWith("ВВЕДИТЕ")
                         || !text_search.getText().toString().isEmpty()){
                     logOut("Кнопка нажата");
                     booksAPIRequest = new GoogleBooksAPIRequest();
-                    String[] params = text_search.getText().toString().split("\\s+");
-                    booksAPIRequest.execute(params);
+                    booksAPIRequest.execute(text_search.getText().toString().replace("\\s+", "\\s"));
+                } else {
+                    return;
                 }
             }
         });
@@ -105,28 +109,21 @@ public class SearchActivity extends Activity {
                 logOut("Соединение установлено");
                 return;
             } else {
-                Log.i(getClass().getName(), "Not connected to the internet");
                 logOut("Отсутствует интернет соединение");
-                //cancel(true);
+                cancel(true);
                 return;
             }
         }
 
         @Override
         protected String doInBackground(String... params) {//не имеет доступ к UI, вся логика и обработка данных
-            //return null;
             // Stop if cancelled
-
-            try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            /*if(isCancelled()){
+            if(isCancelled()){
                 return null;
             }
 
             String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=" + params[0];//простой поиск
+
             try{
                 HttpURLConnection connection = null;
                 // устанавливаем соединение
@@ -137,16 +134,19 @@ public class SearchActivity extends Activity {
                     connection.setReadTimeout(5000); // 5 seconds
                     connection.setConnectTimeout(5000); // 5 seconds
                 } catch (MalformedURLException e) {
+                    logOut("Impossible: The only two URLs used in the app are taken from string resources.");
                     // Impossible: The only two URLs used in the app are taken from string resources.
                     e.printStackTrace();
                 } catch (ProtocolException e) {
+                    logOut("Impossible: GET is a perfectly valid request method.");
                     // Impossible: "GET" is a perfectly valid request method.
                     e.printStackTrace();
                 }
 
                 int responseCode = connection.getResponseCode();
                 if(responseCode != 200){//если ошибка
-                    Log.w(getClass().getName(), "GoogleBooksAPI request failed. Response Code: " + responseCode);
+                    logOut("GoogleBooksAPI request failed. Response Code: " + responseCode);
+                    //Log.w(getClass().getName(), "GoogleBooksAPI request failed. Response Code: " + responseCode);
                     connection.disconnect();
                     return null;
                 }
@@ -161,31 +161,35 @@ public class SearchActivity extends Activity {
                 }
                 String responseString = builder.toString();
 
-                Log.d(getClass().getName(), "Response String: " + responseString);
-                //JSONObject responseJson = new JSONObject(responseString);
+              // BookObject book = new BookObjectParser().parse(responseString);
+
                 // Close connection and return response code.
                 connection.disconnect();
+
                 return responseString;
                 //return responseJson;
             } catch (SocketTimeoutException e) {
+                logOut("Connection timed out. Return null");
                 Log.w(getClass().getName(), "Connection timed out. Return null");
                 return null;
             } catch(IOException e){
-                Log.d(getClass().getName(), "IOException when connecting to Google Books API.");
+                logOut("IOException when connecting to Google Books API.");
+                Log.w(getClass().getName(), "IOException when connecting to Google Books API.");
+                e.printStackTrace();
+                return null;
+            } /*catch (JSONException e) {
+                logOut("JSONException when connecting to Google Books API.");
+                Log.d(getClass().getName(), "JSONException when connecting to Google Books API.");
                 e.printStackTrace();
                 return null;
             }*/
-//        } catch (JSONException e) {
-//            Log.d(getClass().getName(), "JSONException when connecting to Google Books API.");
-//            e.printStackTrace();
-//            return null;
-//        }
-            return null;
         }
 
         @Override
         protected void onPostExecute(String jsonObject) {//имеет доступ, для вывода результатов
             isLoading.setVisibility(View.INVISIBLE);
+            statusAndInfo.setMaxLines(10);
+            statusAndInfo.setText(jsonObject);
            // super.onPostExecute(jsonObject);
         }
     }
