@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.androidquery.AQuery;
 
+import java.util.List;
+
 import ru.vsu.cs.app.bookstore.R;
 
 /**
@@ -19,7 +21,7 @@ import ru.vsu.cs.app.bookstore.R;
 public class RecordsAdapter extends ArrayAdapter<BookObject> {
 
 
-    public RecordsAdapter(Context context, int resource, BookObject[] objects) {
+    public RecordsAdapter(Context context, int resource, List<BookObject> objects) {
         super(context, resource, objects);
     }
 
