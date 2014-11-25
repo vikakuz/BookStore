@@ -1,11 +1,14 @@
 package ru.vsu.cs.app.bookstore.search_activity;
 
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 /*
@@ -17,13 +20,16 @@ boolean isEBook, isForSale // in "saleInfo"
 
 public class BookObjectParser implements Parser<BookObject> {
 
+    public ArrayList<BookObject> records = new ArrayList<BookObject>();
+
     @Override
-    public BookObject parse(String json) throws JSONException {
-        BookObject bookObject = new BookObject();
+    public ArrayList<BookObject> parse(String json) throws JSONException {
         JSONObject response = new JSONObject(json);
         JSONArray dataArray = response.getJSONArray("items");
 
         for (int i = 0; i < dataArray.length(); i++){
+            BookObject bookObject = new BookObject();
+
             StringBuilder data = new StringBuilder();
 
             JSONObject volumeInfo = dataArray.getJSONObject(i).getJSONObject("volumeInfo");
@@ -74,9 +80,11 @@ public class BookObjectParser implements Parser<BookObject> {
             } else {
                 bookObject.setForSale(true);
             }
+
+            records.add(bookObject);
         }
 
-        return bookObject;
+        return records;
     }
 
 }

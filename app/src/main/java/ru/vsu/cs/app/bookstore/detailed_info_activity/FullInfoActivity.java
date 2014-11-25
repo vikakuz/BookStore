@@ -4,15 +4,37 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import ru.vsu.cs.app.bookstore.R;
+import ru.vsu.cs.app.bookstore.search_activity.BookObject;
 
 public class FullInfoActivity extends Activity {
 
+    public static final String EXTRA_BOOK = "book";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_info);
+
+        BookObject extraBook = (BookObject) getIntent().getSerializableExtra(EXTRA_BOOK);
+        //имя
+//        TextView name = (TextView) findViewById(R.id.textName);
+//        name.setText(extraBook.getName());
+//        //автор
+//        TextView author =(TextView) findViewById(R.id.textAuthor);
+//        author.setText(extraBook.getAuthor());
+//        //цена
+//        TextView cost = (TextView) findViewById(R.id.textCost);
+//        cost.setText(getString(R.string.price, (int) extraBook.getCost()));
+//        //краткое описание
+//        TextView description = (TextView) findViewById(R.id.textOfDescription);
+//        description.setText(extraBook.getDiscription());
+//        //обложка
+//        ImageView userImage = (ImageView) findViewById(R.id.imageCover);
+//        userImage.setImageResource(extraBook.getCover());
     }
 
 

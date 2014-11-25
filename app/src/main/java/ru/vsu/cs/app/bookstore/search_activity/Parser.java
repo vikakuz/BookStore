@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 public interface Parser<T extends Serializable> {
 
-	public T parse(String json) throws JSONException;
+	public java.util.ArrayList<BookObject> parse(String json) throws JSONException;
 
 }
