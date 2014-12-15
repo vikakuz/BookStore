@@ -1,0 +1,18 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="8dp"
+    tools:context="ru.vsu.cs.app.bookstore.favorite_list_activity.FavoriteListActivity"
+    android:background="@color/black">
+
+    <ListView
+        android:id="@+id/list_favorite_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/blue"/>
+
+</RelativeLayout>

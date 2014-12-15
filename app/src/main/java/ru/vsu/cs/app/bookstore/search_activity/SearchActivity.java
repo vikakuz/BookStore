@@ -60,12 +60,14 @@ public class SearchActivity extends Activity {
         text_search = (EditText) findViewById(R.id.text_search);
         btn_search = (ImageButton) findViewById(R.id.btn_search);
         statusAndInfo = (TextView) findViewById(R.id.text_empty);
-        recordsList = (ListView) findViewById(R.id.list_data);
+        recordsList = (ListView) findViewById(R.id.list_search_data);
         isLoading = (ProgressBar) findViewById(R.id.progress_bar);
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isLoading.setVisibility(View.VISIBLE);
+
                 logOut(text_search.getText().toString());
                 if (!(text_search.getText().toString().toUpperCase().startsWith("ВВЕДИТЕ")
                         || text_search.getText().toString().isEmpty())){
@@ -73,6 +75,8 @@ public class SearchActivity extends Activity {
                     booksAPIRequest = new GoogleBooksAPIRequest();
                     booksAPIRequest.execute(text_search.getText().toString().replace("\\s+", "\\s"));
                 }
+
+                isLoading.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -101,8 +105,6 @@ public class SearchActivity extends Activity {
         @Override
         protected void onPreExecute() {//имеет доступ к UI, по сути для сбора нужной инф-ии
             // Check network connection.
-            isLoading.setVisibility(View.VISIBLE);
-
             ConnectivityManager connMngr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMngr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()){
@@ -188,7 +190,7 @@ public class SearchActivity extends Activity {
 
         @Override
         protected void onPostExecute(String jsonObject){//имеет доступ, для вывода результатов
-            isLoading.setVisibility(View.INVISIBLE);
+           // isLoading.setVisibility(View.INVISIBLE);
 
             //должно быть верно
             if (!records.isEmpty()) {
@@ -206,6 +208,7 @@ public class SearchActivity extends Activity {
                 logs = "Соответствий не найдено";
             }
 
+            isLoading.setVisibility(View.INVISIBLE);
             //if (logs.isEmpty()){
                statusAndInfo.setMaxLines(10);
                statusAndInfo.setText(jsonObject);
@@ -274,18 +277,18 @@ public class SearchActivity extends Activity {
 
                     //TODO images
                     JSONObject covers = volumeInfo.getJSONObject("imageLinks");//
-                    bookObject.setSmallCover(covers.optString("smallThumbnail"),
+                    bookObject.setSmallCover(covers.optString("smallThumbnail")/*,
                                             getApplicationContext(),
-                                            R.id.image_book_cover);
+                                            R.id.image_book_cover*/);
                     if (bookObject.getSmallCover().toString().isEmpty()) {
-                        logs = "Не удалось найти smallThumbnail.";
+                        logs = "Не удалось найти small cover.";
                     }
 
-                    bookObject.setBigCover(covers.optString("thumbnail"),
+                    bookObject.setBigCover(covers.optString("thumbnail")/*,
                                             getApplicationContext(),
-                                            R.id.image_cover);
+                                            R.id.image_cover*/);
                     if (bookObject.getBigCover().toString().isEmpty()) {
-                        logs = "Не удалось найти thumbnail.";
+                        logs = "Не удалось найти big cover.";
                     }
 
                     bookObject.setLanguage(volumeInfo.optString("language"));//язык

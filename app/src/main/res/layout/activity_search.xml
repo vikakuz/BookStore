@@ -43,7 +43,7 @@
         </LinearLayout>
 
         <ListView
-            android:id="@+id/list_data"
+            android:id="@+id/list_search_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/blue"

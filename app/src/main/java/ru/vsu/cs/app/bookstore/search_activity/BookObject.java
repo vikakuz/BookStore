@@ -42,9 +42,9 @@ public class BookObject implements Serializable {
         this.language = language;
     }
 
-    public void setSmallCover(String smallCover, Context context, int id) {
-        AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
-        aq.id(id).image(smallCover);
+    public void setSmallCover(String smallCover/*, Context context, int id*/) {
+       /* AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
+        aq.id(id).image(smallCover);*/
         try {
             this.smallCover = new URL(smallCover);
         } catch (MalformedURLException e) {
@@ -52,9 +52,9 @@ public class BookObject implements Serializable {
         }
     }
 
-    public void setBigCover(String bigCover, Context context, int id) {
-        AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
-        aq.id(id).image(bigCover);
+    public void setBigCover(String bigCover/*, Context context, int id*/) {
+       /* AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
+        aq.id(id).image(bigCover);*/
         try {
             this.bigCover = new URL(bigCover);
         } catch (MalformedURLException e) {
