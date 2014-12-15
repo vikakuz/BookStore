@@ -13,7 +13,7 @@ public class BookObject implements Serializable {
             pageCount;
     private String title, authors, category,language, description;
     private URL smallCover, bigCover,
-            readOnline;
+            detailedInfo, readOnline;
     private boolean isEBook, isForSale;// in "saleInfo"
     //private ArrayList<MenuItem> menuItems;
 
@@ -60,6 +60,18 @@ public class BookObject implements Serializable {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setDetailedInfo(String detailedInfo) {
+        try {
+            this.detailedInfo = new URL(detailedInfo);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public URL getDetailedInfo() {
+        return detailedInfo;
     }
 
     public void setReadOnline(URL readOnline) {

@@ -193,7 +193,7 @@ public class SearchActivity extends Activity {
            // isLoading.setVisibility(View.INVISIBLE);
 
             //должно быть верно
-            if (!records.isEmpty()) {
+            /*if (!records.isEmpty()) {
                 adapter = new RecordsAdapter(SearchActivity.this, R.layout.item_list, records);
                 recordsList.setAdapter(adapter);
                 recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -206,15 +206,11 @@ public class SearchActivity extends Activity {
                 });
             } else {
                 logs = "Соответствий не найдено";
-            }
+            }*/
 
-            isLoading.setVisibility(View.INVISIBLE);
-            //if (logs.isEmpty()){
-               statusAndInfo.setMaxLines(10);
-               statusAndInfo.setText(jsonObject);
-           // } else {
-                logOut(logs);
-            //}
+            statusAndInfo.setMaxLines(10);
+            statusAndInfo.setText(jsonObject);
+            logOut(logs);
 
         }
 
@@ -292,6 +288,11 @@ public class SearchActivity extends Activity {
                     }
 
                     bookObject.setLanguage(volumeInfo.optString("language"));//язык
+
+                    bookObject.setDetailedInfo(volumeInfo.optString("infoLink"));
+                    if (bookObject.getDetailedInfo().toString().isEmpty()) {
+                        logs = "Не удалось найти infoLink.";
+                    }
 
                     JSONObject saleInfo = dataArray.getJSONObject(i).getJSONObject("saleInfo");
                     bookObject.setEBook(saleInfo.optBoolean("isEbook"));//isEBook
