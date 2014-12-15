@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.androidquery.AQuery;
 
 import ru.vsu.cs.app.bookstore.R;
 import ru.vsu.cs.app.bookstore.search_activity.BookObject;
@@ -21,20 +22,25 @@ public class FullInfoActivity extends Activity {
 
         BookObject extraBook = (BookObject) getIntent().getSerializableExtra(EXTRA_BOOK);
         //имя
-//        TextView name = (TextView) findViewById(R.id.textName);
-//        name.setText(extraBook.getName());
-//        //автор
-//        TextView author =(TextView) findViewById(R.id.textAuthor);
-//        author.setText(extraBook.getAuthor());
-//        //цена
-//        TextView cost = (TextView) findViewById(R.id.textCost);
-//        cost.setText(getString(R.string.price, (int) extraBook.getCost()));
-//        //краткое описание
-//        TextView description = (TextView) findViewById(R.id.textOfDescription);
-//        description.setText(extraBook.getDiscription());
-//        //обложка
-//        ImageView userImage = (ImageView) findViewById(R.id.imageCover);
-//        userImage.setImageResource(extraBook.getCover());
+        TextView title = (TextView) findViewById(R.id.text_title);
+        title.setText(extraBook.getTitle());
+        //автор
+        TextView author =(TextView) findViewById(R.id.text_author);
+        author.setText(extraBook.getAuthors());
+        //язык
+        TextView language =(TextView) findViewById(R.id.text_language_value);
+        language.setText(extraBook.getLanguage());
+        //жанр
+        TextView category =(TextView) findViewById(R.id.text_category_value);
+        category.setText(extraBook.getCategory());
+        //краткое описание
+        TextView description = (TextView) findViewById(R.id.text_of_description);
+        description.setText(extraBook.getDescription());
+        //обложка
+        //ImageView cover = (ImageView) findViewById(R.id.imageCover);
+        AQuery aq = new AQuery(getApplicationContext()); //если не ошибаюсь, а параметрах контекст
+        aq.id(R.id.image_cover).image(extraBook.getBigCover().toString());
+        //cover.setImageResource(extraBook.getBigCover());
     }
 
 

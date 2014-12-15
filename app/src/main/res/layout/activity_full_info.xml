@@ -25,7 +25,7 @@
                 android:layout_gravity="fill_horizontal">
 
                 <ImageView
-                    android:id="@+id/image_over"
+                    android:id="@+id/image_cover"
                     android:layout_width="80dp"
                     android:layout_height="100dp"
                     android:src="@android:drawable/ic_dialog_info"
@@ -38,7 +38,7 @@
                     android:layout_marginLeft="15dp">
 
                     <TextView
-                        android:id="@+id/text_name"
+                        android:id="@+id/text_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="23sp"
@@ -163,7 +163,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/textDescription"
+                    android:id="@+id/text_description"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
 
@@ -174,7 +174,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/textOfDescription"
+                    android:id="@+id/text_of_description"
                     android:layout_gravity="fill_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

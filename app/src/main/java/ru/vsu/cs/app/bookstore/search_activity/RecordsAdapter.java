@@ -37,7 +37,6 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
             infoFromActivity = (GetInfoFromActivity) convertView.getTag();
         }
 
-
         AQuery aq = new AQuery(convertView);
         aq.id(R.id.image_book_cover).image(String.valueOf(getItem(position).getSmallCover()));
 
@@ -50,6 +49,7 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
 
         private TextView name;
         private TextView author;
+        //private ImageView cover;
 
         private GetInfoFromActivity(View view) {
             this.name = (TextView) view.findViewById(R.id.text_book_name);
@@ -57,10 +57,10 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
            // this.cover = (ImageView) view.findViewById(R.id.image_book_cover);
         }
 
-        public void populate(String name, String author/*, AQuery cover*/) {
+        public void populate(String name, String author/*, ImageView cover*/) {
             this.name.setText(name);
             this.author.setText(author);
-          //  this.cover.setImageResource(cover);
+           // this.cover = cover;
         }
     }
 }

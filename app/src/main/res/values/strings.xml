@@ -4,7 +4,7 @@
     <string name="app_name">Книжный магазин</string>
     <string name="action_settings">Settings</string>
     <string name="search_hint">Поиск</string>
-    <string name="text">Введите автора книги</string>
+    <string name="text">пушкин</string>
     <string name="add">Поиск</string>
     <string name="no_records">Соответствий не найдено</string>
     <string name="title_activity_full_info">Книга</string>

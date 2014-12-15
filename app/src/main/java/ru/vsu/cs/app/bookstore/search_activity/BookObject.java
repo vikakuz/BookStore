@@ -1,12 +1,17 @@
 package ru.vsu.cs.app.bookstore.search_activity;
 
+import android.content.Context;
+
+import com.androidquery.AQuery;
+
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BookObject implements Serializable {
     private int id,
             pageCount;
-    private String title, authors, category,language;
+    private String title, authors, category,language, description;
     private URL smallCover, bigCover,
             readOnline;
     private boolean isEBook, isForSale;// in "saleInfo"
@@ -37,12 +42,24 @@ public class BookObject implements Serializable {
         this.language = language;
     }
 
-    public void setSmallCover(URL smallCover) {
-        this.smallCover = smallCover;
+    public void setSmallCover(String smallCover, Context context, int id) {
+        AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
+        aq.id(id).image(smallCover);
+        try {
+            this.smallCover = new URL(smallCover);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setBigCover(URL bigCover) {
-        this.bigCover = bigCover;
+    public void setBigCover(String bigCover, Context context, int id) {
+        AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
+        aq.id(id).image(bigCover);
+        try {
+            this.bigCover = new URL(bigCover);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setReadOnline(URL readOnline) {
@@ -99,5 +116,13 @@ public class BookObject implements Serializable {
 
     public boolean isForSale() {
         return isForSale;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
