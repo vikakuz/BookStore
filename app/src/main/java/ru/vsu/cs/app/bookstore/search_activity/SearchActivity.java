@@ -162,7 +162,6 @@ public class SearchActivity extends Activity {
 //                InputStream inputStream = connection.getInputStream();
                 String responseString = builder.toString();
 //                //TODO
-                records = new ArrayList<BookObject>();
                 records = new BookObjectParser().parse(responseString);
 
 
@@ -180,7 +179,7 @@ public class SearchActivity extends Activity {
                 Log.w(getClass().getName(), "IOException when connecting to Google Books API.");
                 e.printStackTrace();
                 return null;
-              } catch (JSONException e) {
+            } catch (JSONException e) {
                 logs = "JSONException when parse response.";
                 Log.w(getClass().getName(), "JSONException when parse response.");
                 e.printStackTrace();
@@ -193,7 +192,7 @@ public class SearchActivity extends Activity {
            // isLoading.setVisibility(View.INVISIBLE);
 
             //должно быть верно
-            /*if (!records.isEmpty()) {
+            if (!records.isEmpty()) {
                 adapter = new RecordsAdapter(SearchActivity.this, R.layout.item_list, records);
                 recordsList.setAdapter(adapter);
                 recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -206,7 +205,7 @@ public class SearchActivity extends Activity {
                 });
             } else {
                 logs = "Соответствий не найдено";
-            }*/
+            }
 
             statusAndInfo.setMaxLines(10);
             statusAndInfo.setText(jsonObject);
@@ -233,7 +232,11 @@ public class SearchActivity extends Activity {
             @Override
             public ArrayList<BookObject> parse(String json) throws JSONException{
                 JSONObject response = new JSONObject(json);
+
+               // int count  = response.getInt("totalItems");
+
                 JSONArray dataArray = response.getJSONArray("items");
+                //logs  = Integer.toString(dataArray.length());
 
                 for (int i = 0; i < dataArray.length(); i++){
                     BookObject bookObject = new BookObject();
@@ -245,7 +248,7 @@ public class SearchActivity extends Activity {
 
                     JSONArray authors = volumeInfo.getJSONArray("authors");//авторы
                     for (int j = 0; j < authors.length(); j++ ){
-                        data.append(authors.get(i))
+                        data.append(authors.optString(i))
                                 .append(", ");
                     }
                     bookObject.setAuthors(data.toString());

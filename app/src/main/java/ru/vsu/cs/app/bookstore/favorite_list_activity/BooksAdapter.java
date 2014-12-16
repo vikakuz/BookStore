@@ -2,7 +2,11 @@ package ru.vsu.cs.app.bookstore.favorite_list_activity;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.view.View;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+
+import ru.vsu.cs.app.bookstore.R;
 
 /**
  * Created by V on 16.12.2014.

@@ -20,9 +20,11 @@ import ru.vsu.cs.app.bookstore.R;
  */
 public class RecordsAdapter extends ArrayAdapter<BookObject> {
 
+    private AQuery aq;
 
     public RecordsAdapter(Context context, int resource, List<BookObject> objects) {
         super(context, resource, objects);
+        aq = new AQuery(context);
     }
 
     @Override
@@ -37,30 +39,29 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
             infoFromActivity = (GetInfoFromActivity) convertView.getTag();
         }
 
-        AQuery aq = new AQuery(convertView);
-        aq.id(R.id.image_book_cover).image(String.valueOf(getItem(position).getSmallCover()));
 
-        infoFromActivity.populate(getItem(position).getTitle(),
-                getItem(position).getAuthors()); //TODO картинку
+        infoFromActivity.populate(getItem(position)); //TODO картинку
         return convertView;
     }
 
     private class GetInfoFromActivity{
 
+        //todo как загрузить картинку и где именно
         private TextView name;
         private TextView author;
-        //private ImageView cover;
+        private ImageView cover;
 
         private GetInfoFromActivity(View view) {
             this.name = (TextView) view.findViewById(R.id.text_book_name);
             this.author = (TextView) view.findViewById(R.id.text_book_author);
-           // this.cover = (ImageView) view.findViewById(R.id.image_book_cover);
+            this.cover = (ImageView) view.findViewById(R.id.image_book_cover);
         }
 
-        public void populate(String name, String author/*, ImageView cover*/) {
-            this.name.setText(name);
-            this.author.setText(author);
-           // this.cover = cover;
+        public void populate(BookObject book) {
+            this.name.setText(book.getTitle());
+            this.author.setText(book.getAuthors());
+            aq.id(cover).image(book.getSmallCover().toString());
+            //this.cover = cover;
         }
     }
 }
