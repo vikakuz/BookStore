@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Книжный магазин</string>
+    <string name="app_name">BookStore</string>
     <string name="action_settings">Settings</string>
     <string name="search_hint">Поиск</string>
     <string name="text">Введите автора</string>
     <string name="add">Поиск</string>
     <string name="no_records">Соответствий не найдено</string>
-    <string name="title_activity_full_info">Книга</string>
+    <string name="title_activity_full_info">Подробная информация</string>
     <string name="name_of_book_value">Название книги</string>
     <string name="author_of_book_value">Автор книги</string>
     <string name="description">Краткое описание:</string>
@@ -23,5 +23,7 @@
     <string name="title_activity_test_api">TestAPIActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_favorite_list">Избранные</string>
+    <string name="cost">Цена:</string>
+    <string name="cost_value">133 руб.</string>
 
 </resources>

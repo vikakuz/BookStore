@@ -260,7 +260,7 @@ public class SearchActivity extends Activity {
 
                     }
 
-                    bookObject.setPageCount(volumeInfo.optInt("pageCount"));//кол-во страниц
+                    //bookObject.setPageCount(volumeInfo.optInt("pageCount"));//кол-во страниц
 
                     JSONArray category = volumeInfo.optJSONArray("categories");//жанр
                     if (category!= null) {
@@ -275,30 +275,33 @@ public class SearchActivity extends Activity {
                     }
 
                     //TODO images
-                    JSONObject covers = volumeInfo.getJSONObject("imageLinks");//
-                    bookObject.setSmallCover(covers.optString("smallThumbnail")/*,
-                                            getApplicationContext(),
-                                            R.id.image_book_cover*/);
+                    JSONObject covers = volumeInfo.getJSONObject("imageLinks");
+                    bookObject.setSmallCover(covers.optString("smallThumbnail"));
                     if (bookObject.getSmallCover().toString().isEmpty()) {
                         logs = "Не удалось найти small cover.";
                     }
 
-                    bookObject.setBigCover(covers.optString("thumbnail")/*,
-                                            getApplicationContext(),
-                                            R.id.image_cover*/);
+                    bookObject.setBigCover(covers.optString("thumbnail"));
                     if (bookObject.getBigCover().toString().isEmpty()) {
                         logs = "Не удалось найти big cover.";
                     }
 
                     bookObject.setLanguage(volumeInfo.optString("language"));//язык
 
-                    bookObject.setDetailedInfo(volumeInfo.optString("infoLink"));
+                    bookObject.setDetailedInfo(volumeInfo.optString("infoLink"));//ссылка на подроную информацию
                     if (bookObject.getDetailedInfo().toString().isEmpty()) {
                         logs = "Не удалось найти infoLink.";
                     }
 
                     JSONObject saleInfo = dataArray.getJSONObject(i).getJSONObject("saleInfo");
+
                     bookObject.setEBook(saleInfo.optBoolean("isEbook"));//isEBook
+
+                    JSONObject cost = saleInfo.optJSONObject("listPrice");
+                    bookObject.setCost(cost.optDouble("amount"), cost.optString("currencyCode"));//полная цена
+
+                    JSONObject saleCost = saleInfo.optJSONObject("retailPrice");
+                    bookObject.setSaleCost(saleCost.optDouble("amount"), saleCost.optString("currencyCode"));//цена по скидке
 
                     if (saleInfo.optString("saleability").isEmpty()//со скидкой
                             || saleInfo.optString("saleability").toUpperCase().equals("NOT_FOR_SALE")){

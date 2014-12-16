@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
@@ -22,16 +23,23 @@ public class FullInfoActivity extends Activity {
     public TextView author;
     public TextView language;
     public TextView category;
+    public TextView cost;
     public TextView description;
+
+    public ImageView cover;
+
     public ImageButton buy;
     public ImageButton favorite;
     public ImageButton full_info;
+
+    private AQuery aq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_info);
 
+        aq = new AQuery(this.getApplicationContext());
         BookObject extraBook = (BookObject) getIntent().getSerializableExtra(EXTRA_BOOK);
         //имя
         title = (TextView) findViewById(R.id.text_title);
@@ -45,14 +53,22 @@ public class FullInfoActivity extends Activity {
         //жанр
         category =(TextView) findViewById(R.id.text_category_value);
         category.setText(extraBook.getCategory());
+        //цена
+        cost = (TextView) findViewById(R.id.text_cost_value);
+        if (extraBook.isForSale()){
+            cost.setText(extraBook.getCost()    + "\t" +
+                    extraBook.getSaleCost());
+            cost.setTextColor(getResources().getColor(R.color.orange));
+        } else {
+            cost.setText(extraBook.getCost());
+            cost.setTextColor(getResources().getColor(R.color.green));
+        }
         //краткое описание
         description = (TextView) findViewById(R.id.text_of_description);
         description.setText(extraBook.getDescription());
         //обложка
-        //ImageView cover = (ImageView) findViewById(R.id.imageCover);
-        AQuery aq = new AQuery(getApplicationContext()); //если не ошибаюсь, а параметрах контекст
-        aq.id(R.id.image_cover).image(extraBook.getBigCover().toString());
-        //cover.setImageResource(extraBook.getBigCover());
+        cover = (ImageView) findViewById(R.id.image_cover);
+        aq.id(cover).image(extraBook.getBigCover().toString());
 
         buy = (ImageButton) findViewById(R.id.btn_buy);
         buy.setOnClickListener(new View.OnClickListener() {

@@ -20,7 +20,7 @@ import ru.vsu.cs.app.bookstore.R;
  */
 public class RecordsAdapter extends ArrayAdapter<BookObject> {
 
-    private AQuery aq;
+    public AQuery aq;
 
     public RecordsAdapter(Context context, int resource, List<BookObject> objects) {
         super(context, resource, objects);
@@ -39,14 +39,12 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
             infoFromActivity = (GetInfoFromActivity) convertView.getTag();
         }
 
-
-        infoFromActivity.populate(getItem(position)); //TODO картинку
+        infoFromActivity.populate(getItem(position));
         return convertView;
     }
 
     private class GetInfoFromActivity{
 
-        //todo как загрузить картинку и где именно
         private TextView name;
         private TextView author;
         private ImageView cover;
@@ -61,7 +59,6 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
             this.name.setText(book.getTitle());
             this.author.setText(book.getAuthors());
             aq.id(cover).image(book.getSmallCover().toString());
-            //this.cover = cover;
         }
     }
 }

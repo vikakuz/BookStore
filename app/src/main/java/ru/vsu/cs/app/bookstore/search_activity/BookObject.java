@@ -9,14 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BookObject implements Serializable {
-    private int id,
-            pageCount;
-    private String title, authors, category,language, description;
+
+    private int id/*,
+            pageCount*/;
+    private String title, authors, category, language, description,
+            cost, saleCost;
     private URL smallCover, bigCover,
             detailedInfo, readOnline;
     private boolean isEBook, isForSale;// in "saleInfo"
-    //private ArrayList<MenuItem> menuItems;
-
 
     public void setId(int id) {
         this.id = id;
@@ -30,21 +30,18 @@ public class BookObject implements Serializable {
         this.authors = authors;
     }
 
-    public void setPageCount(int pageCount) {
-        this.pageCount = pageCount;
-    }
-
     public void setCategory(String category) {
         this.category = category;
     }
 
     public void setLanguage(String language) {
+        if (language.toUpperCase().equals("RU")) {
+            this.language = "русский";
+        }
         this.language = language;
     }
 
-    public void setSmallCover(String smallCover/*, Context context, int id*/) {
-       /* AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
-        aq.id(id).image(smallCover);*/
+    public void setSmallCover(String smallCover) {
         try {
             this.smallCover = new URL(smallCover);
         } catch (MalformedURLException e) {
@@ -52,9 +49,7 @@ public class BookObject implements Serializable {
         }
     }
 
-    public void setBigCover(String bigCover/*, Context context, int id*/) {
-       /* AQuery aq = new AQuery(context); //если не ошибаюсь, а параметрах контекст
-        aq.id(id).image(bigCover);*/
+    public void setBigCover(String bigCover) {
         try {
             this.bigCover = new URL(bigCover);
         } catch (MalformedURLException e) {
@@ -98,10 +93,6 @@ public class BookObject implements Serializable {
         return authors;
     }
 
-    public int getPageCount() {
-        return pageCount;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -136,5 +127,21 @@ public class BookObject implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public String getSaleCost() {
+        return saleCost;
+    }
+
+    public void setCost(double amount, String currencyCode) {
+        this.cost = Double.toString(amount) + currencyCode;
+    }
+
+    public void setSaleCost(double amount, String currencyCode) {
+        this.saleCost = Double.toString(amount) + currencyCode;
     }
 }

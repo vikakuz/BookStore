@@ -30,6 +30,4 @@
         <item>@color/white</item>
     </integer-array>
 
-    <color name="white1">#ffffff</color>
-
 </resources>
