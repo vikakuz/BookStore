@@ -7,6 +7,7 @@ import android.view.MenuItem;
 
 import ru.vsu.cs.app.bookstore.R;
 
+
 public class FavoriteListActivity extends Activity {
 
     @Override
