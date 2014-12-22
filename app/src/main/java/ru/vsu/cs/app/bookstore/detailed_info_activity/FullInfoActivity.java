@@ -67,7 +67,10 @@ public class FullInfoActivity extends Activity {
                 cost.setTextSize(14);
                 saleCost.setText("");
             } else {
-                cost.setText(/*"<strike>" + */extraBook.getCost()/* + "</strike>"*/);
+               // String arg = input.getText().toString();
+               // String cStyle = getResources().getString(R.string.strike_style, arg);
+               // cost.setText(/*"<strike>" + */extraBook.getCost()/* + "</strike>"*/);
+                cost.setText(getResources().getString(R.string.strike_style, extraBook.getCost()));
                 cost.setTextColor(getResources().getColor(R.color.red));
 
                 saleCost.setText(extraBook.getSaleCost());

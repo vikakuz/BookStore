@@ -25,5 +25,6 @@
     <string name="title_activity_favorite_list">Избранные</string>
     <string name="cost">Цена:</string>
     <string name="cost_value">133 руб.</string>
+    <string name="strike_style"><strike> %s</strike></string>
 
 </resources>
