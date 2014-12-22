@@ -1,6 +1,7 @@
 package ru.vsu.cs.app.bookstore.search_activity;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.androidquery.AQuery;
 
@@ -27,18 +28,33 @@ public class BookObject implements Serializable {
     }
 
     public void setAuthors(String authors) {
-        this.authors = authors;
+        if (TextUtils.isEmpty(authors)){
+            this.authors = " - ";
+        } else {
+            this.authors = authors;
+        }
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        if (TextUtils.isEmpty(category)){
+            this.category = " - ";
+        } else {
+            this.category = category;
+        }
     }
 
     public void setLanguage(String language) {
-        if (language.toUpperCase().equals("RU")) {
-            this.language = "русский";
+        if (!TextUtils.isEmpty(language)) {
+            if (language.toUpperCase().equals("RU")) {
+                this.language = "русский";
+            } else if (language.toUpperCase().equals("EN")){
+                this.language = "английский";
+            } else {
+                this.language = language;
+            }
+        } else {
+            this.language = " - ";
         }
-        this.language = language;
     }
 
     public void setSmallCover(String smallCover) {
@@ -126,7 +142,12 @@ public class BookObject implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (TextUtils.isEmpty(description)){
+            this.description = "Нет краткого описания.";
+        } else {
+            this.description = description;
+
+        }
     }
 
     public String getCost() {

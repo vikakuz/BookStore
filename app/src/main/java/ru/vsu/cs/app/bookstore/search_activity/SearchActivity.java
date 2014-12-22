@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,17 +67,13 @@ public class SearchActivity extends Activity {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isLoading.setVisibility(View.VISIBLE);
-
-                logOut(text_search.getText().toString());
                 if (!(text_search.getText().toString().toUpperCase().startsWith("ВВЕДИТЕ")
                         || text_search.getText().toString().isEmpty())){
-                    logOut("Кнопка нажата");
+                   // logOut("Кнопка нажата");
                     booksAPIRequest = new GoogleBooksAPIRequest();
                     booksAPIRequest.execute(text_search.getText().toString().replace("\\s+", "\\s"));
                 }
 
-                isLoading.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -122,8 +119,8 @@ public class SearchActivity extends Activity {
                 return null;
             }
 
-            String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=" + params[0];//простой поиск
-
+            //String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=" + params[0];//простой поиск
+            String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=inauthor:" + params[0];
             try{
                 HttpURLConnection connection = null;
                 // устанавливаем соединение
@@ -134,19 +131,16 @@ public class SearchActivity extends Activity {
                     connection.setReadTimeout(5000); // 5 seconds
                     connection.setConnectTimeout(5000); // 5 seconds
                 } catch (MalformedURLException e) {
-                    logs = "Impossible: The only two URLs used in the app are taken from string resources.";
-                    // Impossible: The only two URLs used in the app are taken from string resources.
+                    logs += "Impossible: The only two URLs used in the app are taken from string resources.";
                     e.printStackTrace();
                 } catch (ProtocolException e) {
-                    logs = "Impossible: GET is a perfectly valid request method.";
-                    // Impossible: "GET" is a perfectly valid request method.
+                    logs += "Impossible: GET is a perfectly valid request method.";
                     e.printStackTrace();
                 }
 
                 int responseCode = connection.getResponseCode();
                 if(responseCode != 200){//если ошибка
-                    logs ="GoogleBooksAPI request failed. Response Code: " + responseCode;
-                    //Log.w(getClass().getName(), "GoogleBooksAPI request failed. Response Code: " + responseCode);
+                    logs +="GoogleBooksAPI request failed. Response Code: " + responseCode;
                     connection.disconnect();
                     return null;
                 }
@@ -159,28 +153,24 @@ public class SearchActivity extends Activity {
                     builder.append(line);
                     line = responseReader.readLine();
                 }
-//                InputStream inputStream = connection.getInputStream();
                 String responseString = builder.toString();
-//                //TODO
                 records = new BookObjectParser().parse(responseString);
 
 
                 // Close connection and return response code.
-               // inputStream.close();
                 connection.disconnect();
-
                 return responseString;
             } catch (SocketTimeoutException e) {
-                logs = "Connection timed out. Return null";
+                logs += "Connection timed out. Return null";
                 Log.w(getClass().getName(), "Connection timed out. Return null");
                 return null;
             } catch(IOException e){
-                logs = "IOException when connecting to Google Books API.";
+                logs += "IOException when connecting to Google Books API.";
                 Log.w(getClass().getName(), "IOException when connecting to Google Books API.");
                 e.printStackTrace();
                 return null;
             } catch (JSONException e) {
-                logs = "JSONException when parse response.";
+                logs += "JSONException when parse response.";
                 Log.w(getClass().getName(), "JSONException when parse response.");
                 e.printStackTrace();
                 return null;
@@ -192,7 +182,7 @@ public class SearchActivity extends Activity {
            // isLoading.setVisibility(View.INVISIBLE);
 
             //должно быть верно
-            if (!records.isEmpty()) {
+            if (records != null && !records.isEmpty()) {
                 adapter = new RecordsAdapter(SearchActivity.this, R.layout.item_list, records);
                 recordsList.setAdapter(adapter);
                 recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -204,16 +194,19 @@ public class SearchActivity extends Activity {
                     }
                 });
             } else {
-                logs = "Соответствий не найдено";
+                statusAndInfo.setText("Соответствий не найдено");
+               // logs = "Соответствий не найдено";
             }
 
-            statusAndInfo.setMaxLines(10);
-            statusAndInfo.setText(jsonObject);
-            logOut(logs);
+//            statusAndInfo.setMaxLines(10);
+//            statusAndInfo.setText(jsonObject);
+            if (!TextUtils.isEmpty(logs)) {
+                logOut(logs);
+            }
 
         }
 
-        private String readResponse(InputStream inputStream) throws IOException{
+       /* private String readResponse(InputStream inputStream) throws IOException{
             StringBuilder builder = new StringBuilder();
             BufferedReader responseReader = new BufferedReader(new InputStreamReader(inputStream));
             String line = responseReader.readLine();
@@ -222,7 +215,7 @@ public class SearchActivity extends Activity {
                 line = responseReader.readLine();
             }
             return builder.toString();
-        }
+        }*/
 
 
         private class BookObjectParser implements Parser<BookObject> {
@@ -231,86 +224,86 @@ public class SearchActivity extends Activity {
 
             @Override
             public ArrayList<BookObject> parse(String json) throws JSONException{
-                JSONObject response = new JSONObject(json);
+                if (!TextUtils.isEmpty(json)) {
+                    JSONObject response = new JSONObject(json);
+                    JSONArray dataArray = response.getJSONArray("items");
 
-               // int count  = response.getInt("totalItems");
+                    for (int i = 0; i < dataArray.length(); i++) {
+                        BookObject bookObject = new BookObject();
 
-                JSONArray dataArray = response.getJSONArray("items");
-                //logs  = Integer.toString(dataArray.length());
+                        StringBuilder data = new StringBuilder();
 
-                for (int i = 0; i < dataArray.length(); i++){
-                    BookObject bookObject = new BookObject();
+                        JSONObject volumeInfo = dataArray.getJSONObject(i).getJSONObject("volumeInfo");
+                        bookObject.setTitle(volumeInfo.getString("title"));//название
 
-                    StringBuilder data = new StringBuilder();
-
-                    JSONObject volumeInfo = dataArray.getJSONObject(i).getJSONObject("volumeInfo");
-                    bookObject.setTitle(volumeInfo.getString("title"));//название
-
-                    JSONArray authors = volumeInfo.getJSONArray("authors");//авторы
-                    for (int j = 0; j < authors.length(); j++ ){
-                        data.append(authors.optString(i))
-                                .append(", ");
-                    }
-                    bookObject.setAuthors(data.toString());
-                    data.setLength(0);
-
-                    bookObject.setDescription(volumeInfo.optString("description"));//описание
-                    if (bookObject.getDescription().isEmpty()){
-                        bookObject.setDescription("Нет краткого описания");
-
-                    }
-
-                    //bookObject.setPageCount(volumeInfo.optInt("pageCount"));//кол-во страниц
-
-                    JSONArray category = volumeInfo.optJSONArray("categories");//жанр
-                    if (category!= null) {
-                        for (int j = 0; j < category.length(); j++) {
-                            data.append(category.optString(i))
-                                    .append(", ");
+                        JSONArray authors = volumeInfo.optJSONArray("authors");//авторы
+                        if (authors != null) {
+                            data.append(authors.optString(0));
+//                      for (int j = 0; j < authors.length(); j++ ){
+//                          data.append(authors.optString(i))
+//                                  .append(", ");
+//                      }
+                            bookObject.setAuthors(data.toString());
+                            data.setLength(0);
                         }
-                        bookObject.setCategory(data.toString());
-                        data.setLength(0);
-                    } else {
-                        bookObject.setCategory(null);
+
+                        bookObject.setDescription(volumeInfo.optString("description"));//описание
+
+                        JSONArray category = volumeInfo.optJSONArray("categories");//жанр
+                        if (category != null) {
+                            data.append(category.optString(0));
+                            for (int j = 1; j < category.length(); j++) {
+                                data.append(", ")
+                                        .append(category.optString(i));
+                            }
+                            bookObject.setCategory(data.toString());
+                            data.setLength(0);
+                        } else {
+                            bookObject.setCategory(null);
+                        }
+
+                        JSONObject covers = volumeInfo.optJSONObject("imageLinks");
+                        if (covers != null) {
+                            bookObject.setSmallCover(covers.optString("smallThumbnail"));
+                            if (TextUtils.isEmpty(bookObject.getSmallCover().toString())) {
+                                logs += "Не удалось найти small cover.";
+                            }
+
+                            bookObject.setBigCover(covers.optString("thumbnail"));
+                            if (TextUtils.isEmpty(bookObject.getBigCover().toString())) {
+                                logs += "Не удалось найти big cover.";
+                            }
+                        }
+
+                        bookObject.setLanguage(volumeInfo.optString("language"));//язык
+
+                        bookObject.setDetailedInfo(volumeInfo.optString("infoLink"));//ссылка на подроную информацию
+                        if (bookObject.getDetailedInfo().toString().isEmpty()) {
+                            logs += "Не удалось найти infoLink.";
+                        }
+
+                        JSONObject saleInfo = dataArray.getJSONObject(i).getJSONObject("saleInfo");
+
+                        bookObject.setEBook(saleInfo.optBoolean("isEbook"));//isEBook
+
+                        if (TextUtils.isEmpty(saleInfo.optString("saleability"))//со скидкой
+                                || saleInfo.optString("saleability").toUpperCase().equals("NOT_FOR_SALE")) {
+                            bookObject.setForSale(false);
+                        } else {
+                            bookObject.setForSale(true);
+
+                            JSONObject cost = saleInfo.optJSONObject("listPrice");
+                            if (cost != null) {
+                                bookObject.setCost(cost.optDouble("amount"), cost.optString("currencyCode"));//полная цена
+                            }
+                            JSONObject saleCost = saleInfo.optJSONObject("retailPrice");
+                            if (saleCost != null) {
+                                bookObject.setSaleCost(saleCost.optDouble("amount"), saleCost.optString("currencyCode"));//цена по скидке
+                            }
+                        }
+
+                        records.add(bookObject);
                     }
-
-                    //TODO images
-                    JSONObject covers = volumeInfo.getJSONObject("imageLinks");
-                    bookObject.setSmallCover(covers.optString("smallThumbnail"));
-                    if (bookObject.getSmallCover().toString().isEmpty()) {
-                        logs = "Не удалось найти small cover.";
-                    }
-
-                    bookObject.setBigCover(covers.optString("thumbnail"));
-                    if (bookObject.getBigCover().toString().isEmpty()) {
-                        logs = "Не удалось найти big cover.";
-                    }
-
-                    bookObject.setLanguage(volumeInfo.optString("language"));//язык
-
-                    bookObject.setDetailedInfo(volumeInfo.optString("infoLink"));//ссылка на подроную информацию
-                    if (bookObject.getDetailedInfo().toString().isEmpty()) {
-                        logs = "Не удалось найти infoLink.";
-                    }
-
-                    JSONObject saleInfo = dataArray.getJSONObject(i).getJSONObject("saleInfo");
-
-                    bookObject.setEBook(saleInfo.optBoolean("isEbook"));//isEBook
-
-                    JSONObject cost = saleInfo.optJSONObject("listPrice");
-                    bookObject.setCost(cost.optDouble("amount"), cost.optString("currencyCode"));//полная цена
-
-                    JSONObject saleCost = saleInfo.optJSONObject("retailPrice");
-                    bookObject.setSaleCost(saleCost.optDouble("amount"), saleCost.optString("currencyCode"));//цена по скидке
-
-                    if (saleInfo.optString("saleability").isEmpty()//со скидкой
-                            || saleInfo.optString("saleability").toUpperCase().equals("NOT_FOR_SALE")){
-                        bookObject.setForSale(false);
-                    } else {
-                        bookObject.setForSale(true);
-                    }
-
-                    records.add(bookObject);
                 }
 
                 return records;

@@ -2,6 +2,7 @@ package ru.vsu.cs.app.bookstore.detailed_info_activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ public class FullInfoActivity extends Activity {
     public TextView language;
     public TextView category;
     public TextView cost;
+    public TextView saleCost;
     public TextView description;
 
     public ImageView cover;
@@ -32,18 +34,17 @@ public class FullInfoActivity extends Activity {
     public ImageButton favorite;
     public ImageButton full_info;
 
-    private AQuery aq;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_info);
 
-        aq = new AQuery(this.getApplicationContext());
+        AQuery aq = new AQuery(this.getApplicationContext());
         BookObject extraBook = (BookObject) getIntent().getSerializableExtra(EXTRA_BOOK);
         //имя
         title = (TextView) findViewById(R.id.text_title);
         title.setText(extraBook.getTitle());
+        title.setSelected(true);
         //автор
         author =(TextView) findViewById(R.id.text_author);
         author.setText(extraBook.getAuthors());
@@ -53,22 +54,46 @@ public class FullInfoActivity extends Activity {
         //жанр
         category =(TextView) findViewById(R.id.text_category_value);
         category.setText(extraBook.getCategory());
+
         //цена
         cost = (TextView) findViewById(R.id.text_cost_value);
+        //цена со скидкой
+        saleCost = (TextView) findViewById(R.id.text_salecost_value);
         if (extraBook.isForSale()){
-            cost.setText(extraBook.getCost()    + "\t" +
-                    extraBook.getSaleCost());
-            cost.setTextColor(getResources().getColor(R.color.orange));
+
+            if (TextUtils.isEmpty(extraBook.getCost())) {
+                cost.setText("Нет в продаже");
+                cost.setTextColor(getResources().getColor(R.color.white));
+                cost.setTextSize(14);
+                saleCost.setText("");
+            } else {
+                cost.setText(/*"<strike>" + */extraBook.getCost()/* + "</strike>"*/);
+                cost.setTextColor(getResources().getColor(R.color.red));
+
+                saleCost.setText(extraBook.getSaleCost());
+                saleCost.setTextColor(getResources().getColor(R.color.green));
+            }
         } else {
-            cost.setText(extraBook.getCost());
-            cost.setTextColor(getResources().getColor(R.color.green));
+            if (TextUtils.isEmpty(extraBook.getCost())) {
+                cost.setText("Нет в продаже");
+                cost.setTextColor(getResources().getColor(R.color.white));
+                cost.setTextSize(14);
+            } else {
+                cost.setText(extraBook.getCost());
+                cost.setTextColor(getResources().getColor(R.color.green));
+            }
+            saleCost.setText("");
         }
         //краткое описание
         description = (TextView) findViewById(R.id.text_of_description);
         description.setText(extraBook.getDescription());
         //обложка
         cover = (ImageView) findViewById(R.id.image_cover);
-        aq.id(cover).image(extraBook.getBigCover().toString());
+        if (extraBook.getBigCover() == null){
+            cover.setImageResource(R.drawable.ic_default_cover);
+        } else {
+            aq.id(cover).image(extraBook.getBigCover().toString());
+        }
 
         buy = (ImageButton) findViewById(R.id.btn_buy);
         buy.setOnClickListener(new View.OnClickListener() {

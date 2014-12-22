@@ -2,6 +2,7 @@ package ru.vsu.cs.app.bookstore.search_activity;
 
 import android.content.Context;
 import android.media.Image;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import ru.vsu.cs.app.bookstore.R;
  */
 public class RecordsAdapter extends ArrayAdapter<BookObject> {
 
-    public AQuery aq;
+    private AQuery aq;
 
     public RecordsAdapter(Context context, int resource, List<BookObject> objects) {
         super(context, resource, objects);
@@ -51,6 +52,7 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
 
         private GetInfoFromActivity(View view) {
             this.name = (TextView) view.findViewById(R.id.text_book_name);
+            //this.name.setSelected(true);
             this.author = (TextView) view.findViewById(R.id.text_book_author);
             this.cover = (ImageView) view.findViewById(R.id.image_book_cover);
         }
@@ -58,7 +60,11 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
         public void populate(BookObject book) {
             this.name.setText(book.getTitle());
             this.author.setText(book.getAuthors());
-            aq.id(cover).image(book.getSmallCover().toString());
+            if (book.getSmallCover() == null) {
+                this.cover.setImageResource(R.drawable.ic_default_cover);
+            } else {
+                aq.id(cover).image(book.getSmallCover().toString());
+            }
         }
     }
 }

@@ -24,6 +24,8 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:textColor="@color/blue"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
 
         <TextView
@@ -31,6 +33,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/gray"
             />
 
