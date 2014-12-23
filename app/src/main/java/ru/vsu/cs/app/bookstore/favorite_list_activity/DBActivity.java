@@ -4,11 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+//android.support.v7.app.ActionBarActivity;
 import ru.vsu.cs.app.bookstore.R;
 
-
-public class FavoriteListActivity extends Activity {
+public class DBActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

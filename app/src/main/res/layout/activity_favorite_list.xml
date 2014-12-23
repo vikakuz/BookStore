@@ -6,7 +6,7 @@
     android:paddingRight="8dp"
     android:paddingTop="0dp"
     android:paddingBottom="8dp"
-    tools:context="ru.vsu.cs.app.bookstore.favorite_list_activity.FavoriteListActivity"
+    tools:context="ru.vsu.cs.app.bookstore.favorite_list_activity.DBActivity"
     android:background="@color/black">
 
     <ListView

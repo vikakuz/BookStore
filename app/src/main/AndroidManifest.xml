@@ -35,7 +35,7 @@
         </activity>
 
         <activity
-            android:name="ru.vsu.cs.app.bookstore.favorite_list_activity.FavoriteListActivity"
+            android:name=".favorite_list_activity.DBActivity"
             android:label="@string/title_activity_favorite_list" >
         </activity>
     </application>

@@ -1,5 +1,6 @@
 package ru.vsu.cs.app.bookstore.detailed_info_activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ public class FullInfoActivity extends Activity {
     public ImageButton buy;
     public ImageButton favorite;
     public ImageButton full_info;
+    private ActionBar supportActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +48,20 @@ public class FullInfoActivity extends Activity {
         title.setText(extraBook.getTitle());
         title.setSelected(true);
         //автор
-        author =(TextView) findViewById(R.id.text_author);
+        author = (TextView) findViewById(R.id.text_author);
         author.setText(extraBook.getAuthors());
         //язык
-        language =(TextView) findViewById(R.id.text_language_value);
+        language = (TextView) findViewById(R.id.text_language_value);
         language.setText(extraBook.getLanguage());
         //жанр
-        category =(TextView) findViewById(R.id.text_category_value);
+        category = (TextView) findViewById(R.id.text_category_value);
         category.setText(extraBook.getCategory());
 
         //цена
         cost = (TextView) findViewById(R.id.text_cost_value);
         //цена со скидкой
         saleCost = (TextView) findViewById(R.id.text_salecost_value);
-        if (extraBook.isForSale()){
+        if (extraBook.isForSale()) {
 
             if (TextUtils.isEmpty(extraBook.getCost())) {
                 cost.setText("Нет в продаже");
@@ -67,9 +69,9 @@ public class FullInfoActivity extends Activity {
                 cost.setTextSize(14);
                 saleCost.setText("");
             } else {
-               // String arg = input.getText().toString();
-               // String cStyle = getResources().getString(R.string.strike_style, arg);
-               // cost.setText(/*"<strike>" + */extraBook.getCost()/* + "</strike>"*/);
+                // String arg = input.getText().toString();
+                // String cStyle = getResources().getString(R.string.strike_style, arg);
+                // cost.setText(/*"<strike>" + */extraBook.getCost()/* + "</strike>"*/);
                 cost.setText(getResources().getString(R.string.strike_style, extraBook.getCost()));
                 cost.setTextColor(getResources().getColor(R.color.red));
 
@@ -92,7 +94,7 @@ public class FullInfoActivity extends Activity {
         description.setText(extraBook.getDescription());
         //обложка
         cover = (ImageView) findViewById(R.id.image_cover);
-        if (extraBook.getBigCover() == null){
+        if (extraBook.getBigCover() == null) {
             cover.setImageResource(R.drawable.ic_default_cover);
         } else {
             aq.id(cover).image(extraBook.getBigCover().toString());
@@ -143,4 +145,5 @@ public class FullInfoActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

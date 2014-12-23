@@ -1,24 +1,62 @@
 package ru.vsu.cs.app.bookstore.search_activity;
 
-import android.content.Context;
 import android.text.TextUtils;
-
-import com.androidquery.AQuery;
-
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
+@DatabaseTable(tableName = "mybooks")
 public class BookObject implements Serializable {
 
-    private int id/*,
-            pageCount*/;
-    private String title, authors, category, language, description,
-            cost, saleCost;
-    private URL smallCover, bigCover,
-            detailedInfo, readOnline;
-    private boolean isEBook, isForSale;// in "saleInfo"
+    public static final String FIELD_ID = "id";
+    public static final String FIELD_TITLE = "title";
+    public static final String FIELD_AUTHOR = "authors";
+    private static final String FIELD_CATEGORY = "category";
+    private static final String FIELD_LANGUAGE = "language";
+    private static final String FIELD_DESCRIPTION = "description";
+    private static final String FIELD_COST = "cost";
+    private static final String FIELD_SALECOST = "saleCost";
+    private static final String FIELD_SMALLCOVER = "smallCover";
+    private static final String FIELD_BIGCOVER = "bigCover";
+    private static final String FIELD_DETAILED_INFO = "detailedInfo";
+    private static final String FIELD_IS_EBOOK = "isEBook";
+    private static final String FIELD_IS_FOR_SALE = "isForSale";
 
+
+    @DatabaseField(columnName = FIELD_ID, generatedId = true)
+    private int id;
+    @DatabaseField(columnName = FIELD_TITLE)
+    private String title;
+    @DatabaseField(columnName = FIELD_AUTHOR)
+    private String authors;
+    @DatabaseField(columnName = FIELD_CATEGORY)
+    private String category;
+    @DatabaseField(columnName = FIELD_LANGUAGE)
+    private String language;
+    @DatabaseField(columnName = FIELD_DESCRIPTION)
+    private String description;
+    @DatabaseField(columnName = FIELD_COST)
+    private String cost;
+    @DatabaseField(columnName = FIELD_SALECOST)
+    private String saleCost;
+    @DatabaseField(columnName = FIELD_SMALLCOVER)
+    private URL smallCover;
+    @DatabaseField(columnName = FIELD_BIGCOVER)
+    private URL bigCover;
+    @DatabaseField(columnName = FIELD_DETAILED_INFO)
+    private URL detailedInfo;
+//    @DatabaseField(columnName = FIELD_SMALLCOVER)
+//    private URL readOnline;
+    @DatabaseField(columnName = FIELD_IS_EBOOK)
+    private boolean isEBook;
+    @DatabaseField(columnName = FIELD_IS_FOR_SALE)
+    private boolean isForSale;// in "saleInfo"
+
+    public BookObject(){
+
+    }
     public void setId(int id) {
         this.id = id;
     }
@@ -85,10 +123,6 @@ public class BookObject implements Serializable {
         return detailedInfo;
     }
 
-    public void setReadOnline(URL readOnline) {
-        this.readOnline = readOnline;
-    }
-
     public void setEBook(boolean isEBook) {
         this.isEBook = isEBook;
     }
@@ -123,10 +157,6 @@ public class BookObject implements Serializable {
 
     public URL getBigCover() {
         return bigCover;
-    }
-
-    public URL getReadOnline() {
-        return readOnline;
     }
 
     public boolean isEBook() {
@@ -165,4 +195,26 @@ public class BookObject implements Serializable {
     public void setSaleCost(double amount, String currencyCode) {
         this.saleCost = Double.toString(amount) + currencyCode;
     }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setSaleCost(String saleCost) {
+        this.saleCost = saleCost;
+    }
+
+    public void setSmallCover(URL smallCover) {
+        this.smallCover = smallCover;
+    }
+
+    public void setBigCover(URL bigCover) {
+        this.bigCover = bigCover;
+    }
+
+    public void setDetailedInfo(URL detailedInfo) {
+        this.detailedInfo = detailedInfo;
+    }
+
+
 }
