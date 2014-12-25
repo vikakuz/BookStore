@@ -34,7 +34,9 @@ public class DBActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_list);
 
-        DBHelper dbHelper = DBHelper.getInstance(this);
+        info = (TextView) findViewById(R.id.text_info);
+        recordsList = (ListView) findViewById(R.id.list_favorite_data);
+        /*DBHelper dbHelper = DBHelper.getInstance(this);
 
         info = (TextView) findViewById(R.id.text_info);
         recordsList = (ListView) findViewById(R.id.list_favorite_data);
@@ -59,10 +61,38 @@ public class DBActivity extends Activity{
         } else {
             info.setText(R.string.text_list_is_empty);
         }
-
+*/
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DBHelper dbHelper = DBHelper.getInstance(this);
+
+
+        List<BookObject> records = null;
+        try {
+            records = dbHelper.getBookObjectDao().getAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (records != null && !records.isEmpty()) {
+            adapter = new RecordsAdapter(DBActivity.this, R.layout.item_list, records);
+            recordsList.setAdapter(adapter);
+            recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                    Intent intent = new Intent(DBActivity.this, FullInfoActivity.class);
+                    intent.putExtra(FullInfoActivity.EXTRA_BOOK, adapter.getItem(pos));
+                    startActivity(intent);
+                }
+            });
+            info.setText("");
+        } else {
+            info.setText(R.string.text_list_is_empty);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

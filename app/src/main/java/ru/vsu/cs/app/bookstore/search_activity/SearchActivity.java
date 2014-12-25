@@ -63,6 +63,11 @@ public class SearchActivity extends Activity {
         isLoading = (ProgressBar) findViewById(R.id.progress_bar);
         isLoading.setVisibility(View.INVISIBLE);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
