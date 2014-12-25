@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
@@ -127,7 +127,7 @@
                             android:id="@+id/text_cost_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="17sp"
+                            android:textSize="16sp"
                             android:text="@string/cost_value"
                             android:textColor="@color/red"
                             />
@@ -136,7 +136,7 @@
                             android:id="@+id/text_salecost_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="17sp"
+                            android:textSize="16sp"
                             android:text="@string/cost_value"
                             android:textColor="@color/green"
                             />
@@ -173,10 +173,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/blue"
-                    android:text="Добавить в избранное"
                     android:src="@android:drawable/star_big_on"
                     android:textColor="@color/black"
                     />
+
 
                 <ImageButton
                     android:id="@+id/btn_detailed_info"
@@ -215,7 +215,7 @@
                     android:layout_gravity="fill_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/text_sample_descr"
                     android:textSize="14sp"
@@ -224,16 +224,16 @@
                     android:textColor="@color/gray"
                     />
 
-                <Button
-                    android:id="@+id/btn_show_all_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:text="@string/btn_show_all_info"
-                    android:textColor="@color/blue"
-                    android:background="@color/black"/>
-
             </LinearLayout>
+
+            <Button
+            android:id="@+id/btn_show_all_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/btn_show_all_info"
+            android:textColor="@color/blue"
+            android:background="@color/black"/>
 
         </LinearLayout>
 

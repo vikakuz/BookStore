@@ -25,8 +25,8 @@ public class BookObject implements Serializable {
     private static final String FIELD_IS_FOR_SALE = "isForSale";
 
 
-    @DatabaseField(columnName = FIELD_ID, generatedId = true)
-    private int id;
+    @DatabaseField(columnName = FIELD_ID, id = true)
+    private String id;
     @DatabaseField(columnName = FIELD_TITLE)
     private String title;
     @DatabaseField(columnName = FIELD_AUTHOR)
@@ -42,22 +42,20 @@ public class BookObject implements Serializable {
     @DatabaseField(columnName = FIELD_SALECOST)
     private String saleCost;
     @DatabaseField(columnName = FIELD_SMALLCOVER)
-    private URL smallCover;
+    private String smallCover;
     @DatabaseField(columnName = FIELD_BIGCOVER)
-    private URL bigCover;
+    private String bigCover;
     @DatabaseField(columnName = FIELD_DETAILED_INFO)
-    private URL detailedInfo;
-//    @DatabaseField(columnName = FIELD_SMALLCOVER)
-//    private URL readOnline;
+    private String detailedInfo;
     @DatabaseField(columnName = FIELD_IS_EBOOK)
     private boolean isEBook;
     @DatabaseField(columnName = FIELD_IS_FOR_SALE)
-    private boolean isForSale;// in "saleInfo"
+    private boolean isForSale;
 
     public BookObject(){
-
     }
-    public void setId(int id) {
+
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -95,33 +93,7 @@ public class BookObject implements Serializable {
         }
     }
 
-    public void setSmallCover(String smallCover) {
-        try {
-            this.smallCover = new URL(smallCover);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public void setBigCover(String bigCover) {
-        try {
-            this.bigCover = new URL(bigCover);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setDetailedInfo(String detailedInfo) {
-        try {
-            this.detailedInfo = new URL(detailedInfo);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public URL getDetailedInfo() {
-        return detailedInfo;
-    }
 
     public void setEBook(boolean isEBook) {
         this.isEBook = isEBook;
@@ -131,7 +103,7 @@ public class BookObject implements Serializable {
         this.isForSale = isForSale;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -149,14 +121,6 @@ public class BookObject implements Serializable {
 
     public String getLanguage() {
         return language;
-    }
-
-    public URL getSmallCover() {
-        return smallCover;
-    }
-
-    public URL getBigCover() {
-        return bigCover;
     }
 
     public boolean isEBook() {
@@ -204,17 +168,27 @@ public class BookObject implements Serializable {
         this.saleCost = saleCost;
     }
 
-    public void setSmallCover(URL smallCover) {
+    public String getSmallCover() {
+        return smallCover;
+    }
+
+    public String getBigCover() {
+        return bigCover;
+    }
+
+    public String getDetailedInfo() {
+        return detailedInfo;
+    }
+
+    public void setSmallCover(String smallCover) {
         this.smallCover = smallCover;
     }
 
-    public void setBigCover(URL bigCover) {
+    public void setBigCover(String bigCover) {
         this.bigCover = bigCover;
     }
 
-    public void setDetailedInfo(URL detailedInfo) {
+    public void setDetailedInfo(String detailedInfo) {
         this.detailedInfo = detailedInfo;
     }
-
-
 }

@@ -27,6 +27,8 @@ public class BookObjectParser implements Parser<BookObject> {
 
                     StringBuilder data = new StringBuilder();
 
+                    bookObject.setId(dataArray.getJSONObject(i).getString("id"));
+
                     JSONObject volumeInfo = dataArray.getJSONObject(i).getJSONObject("volumeInfo");
                     bookObject.setTitle(volumeInfo.getString("title"));//название
 

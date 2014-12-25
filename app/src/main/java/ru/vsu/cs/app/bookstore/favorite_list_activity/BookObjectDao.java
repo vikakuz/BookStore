@@ -24,5 +24,17 @@ public class BookObjectDao extends BaseDaoImpl<BookObject, Integer> {
 
     }
 
+    public BookObject getBookById(String id) throws SQLException {
+        //запрос
+        return queryBuilder().where().eq(BookObject.FIELD_ID, id).queryForFirst();
+    }
+
+    public boolean objectExists(BookObject book) throws SQLException {
+        if (getBookById(book.getId()) != null) {
+            return  true;
+        } else {
+            return  false;
+        }
+    }
 
 }

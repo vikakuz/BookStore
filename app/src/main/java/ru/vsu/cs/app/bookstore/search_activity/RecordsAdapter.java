@@ -63,7 +63,7 @@ public class RecordsAdapter extends ArrayAdapter<BookObject> {
             if (book.getSmallCover() == null) {
                 this.cover.setImageResource(R.drawable.ic_default_cover);
             } else {
-                aq.id(cover).image(book.getSmallCover().toString());
+                aq.id(cover).image(book.getSmallCover());
             }
         }
     }

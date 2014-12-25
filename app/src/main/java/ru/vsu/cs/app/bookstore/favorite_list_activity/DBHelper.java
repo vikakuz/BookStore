@@ -52,7 +52,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper{
         return OpenHelperManager.getHelper(context, DBHelper.class);
     }
 
-    public BookObjectDao getCityObjectDao() throws SQLException {
+    public BookObjectDao getBookObjectDao() throws SQLException {
         if (bookObjectDao == null) {
             bookObjectDao = new BookObjectDao(getConnectionSource());
         }

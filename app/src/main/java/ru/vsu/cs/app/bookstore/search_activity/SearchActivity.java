@@ -33,6 +33,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import ru.vsu.cs.app.bookstore.R;
 import ru.vsu.cs.app.bookstore.detailed_info_activity.FullInfoActivity;
+import ru.vsu.cs.app.bookstore.favorite_list_activity.DBActivity;
 
 
 public class SearchActivity extends Activity {
@@ -60,6 +61,7 @@ public class SearchActivity extends Activity {
         statusAndInfo = (TextView) findViewById(R.id.text_empty);
         recordsList = (ListView) findViewById(R.id.list_search_data);
         isLoading = (ProgressBar) findViewById(R.id.progress_bar);
+        isLoading.setVisibility(View.INVISIBLE);
 
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +83,14 @@ public class SearchActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_favorites:
+                Intent intent = new Intent(SearchActivity.this, DBActivity.class);
+                //intent.putExtra(FullInfoActivity.EXTRA_BOOK, adapter.getItem(pos));
+                startActivity(intent);
+                break;
+            case R.id.action_settings:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -98,7 +105,7 @@ public class SearchActivity extends Activity {
         @Override
         protected void onPreExecute() {//имеет доступ к UI, по сути для сбора нужной инф-ии
             // Check network connection.
-            //isLoading.setVisibility(View.VISIBLE);
+            isLoading.setVisibility(View.VISIBLE);
             //isLoading.animate();
 
             ConnectivityManager connMngr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -178,7 +185,7 @@ public class SearchActivity extends Activity {
 
         @Override
         protected void onPostExecute(String jsonObject) {//имеет доступ, для вывода результатов
-           // isLoading.setVisibility(View.INVISIBLE);
+            isLoading.setVisibility(View.INVISIBLE);
 
             //должно быть верно
             if (records != null && !records.isEmpty()) {
@@ -192,7 +199,7 @@ public class SearchActivity extends Activity {
                         startActivity(intent);
                     }
                 });
-                statusAndInfo.setVisibility(View.INVISIBLE);
+                statusAndInfo.setText("");
             } else {
                 statusAndInfo.setText("Соответствий не найдено");
                 // logs = "Соответствий не найдено";
