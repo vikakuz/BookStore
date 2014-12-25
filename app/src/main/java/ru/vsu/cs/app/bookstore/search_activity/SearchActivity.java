@@ -201,7 +201,7 @@ public class SearchActivity extends Activity {
                 });
                 statusAndInfo.setText("");
             } else {
-                statusAndInfo.setText("Соответствий не найдено");
+                statusAndInfo.setText(R.string.no_records);
                 // logs = "Соответствий не найдено";
             }
 

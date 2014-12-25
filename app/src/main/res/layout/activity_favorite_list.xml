@@ -9,6 +9,14 @@
     tools:context="ru.vsu.cs.app.bookstore.favorite_list_activity.DBActivity"
     android:background="@color/black">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/text_info"
+        android:text="@string/text_list_is_empty"
+        android:textColor="@color/gray"/>
+
     <ListView
         android:id="@+id/list_favorite_data"
         android:layout_width="match_parent"

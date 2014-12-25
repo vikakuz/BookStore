@@ -4,7 +4,7 @@
     <string name="app_name">BookStore</string>
     <string name="action_settings">Настройки</string>
     <string name="action_search">Поиск</string>
-    <string name="text">Введите автора</string>
+    <string name="author">Введите автора</string>
     <string name="add">Поиск</string>
     <string name="no_records">Соответствий не найдено</string>
     <string name="title_activity_full_info">Подробная информация</string>
@@ -27,5 +27,6 @@
     <string name="cost_value">133 руб.</string>
     <string name="strike_style"><strike> %s</strike></string>
     <string name="action_favorites">Избранные</string>
+    <string name="text_list_is_empty">Список избранных пуст</string>
 
 </resources>

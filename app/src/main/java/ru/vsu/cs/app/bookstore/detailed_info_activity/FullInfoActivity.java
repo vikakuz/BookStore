@@ -2,6 +2,7 @@ package ru.vsu.cs.app.bookstore.detailed_info_activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -24,8 +25,10 @@ import com.androidquery.AQuery;
 import java.sql.SQLException;
 
 import ru.vsu.cs.app.bookstore.R;
+import ru.vsu.cs.app.bookstore.favorite_list_activity.DBActivity;
 import ru.vsu.cs.app.bookstore.favorite_list_activity.DBHelper;
 import ru.vsu.cs.app.bookstore.search_activity.BookObject;
+import ru.vsu.cs.app.bookstore.search_activity.SearchActivity;
 
 public class FullInfoActivity extends Activity {
 
@@ -67,7 +70,7 @@ public class FullInfoActivity extends Activity {
         language.setText(extraBook.getLanguage());
         //жанр
         category = (TextView) findViewById(R.id.text_category_value);
-        category.setText(extraBook.getCategory() + extraBook.getId());
+        category.setText(extraBook.getCategory());
 
         //цена
         cost = (TextView) findViewById(R.id.text_cost_value);
@@ -191,6 +194,7 @@ public class FullInfoActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.full_info, menu);
+
         return true;
     }
 
@@ -199,9 +203,20 @@ public class FullInfoActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.action_favorites:
+                intent = new Intent(FullInfoActivity.this, DBActivity.class);
+                //intent.putExtra(FullInfoActivity.EXTRA_BOOK, adapter.getItem(pos));
+                startActivity(intent);
+                break;
+            case R.id.action_search:
+                intent = new Intent(FullInfoActivity.this, SearchActivity.class);
+                //intent.putExtra(FullInfoActivity.EXTRA_BOOK, adapter.getItem(pos));
+                startActivity(intent);
+                break;
+            case R.id.action_settings:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -5,6 +5,8 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTableConfig;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import ru.vsu.cs.app.bookstore.search_activity.BookObject;
 
@@ -35,6 +37,10 @@ public class BookObjectDao extends BaseDaoImpl<BookObject, Integer> {
         } else {
             return  false;
         }
+    }
+
+    public List<BookObject> getAll() throws SQLException {
+        return queryForAll();
     }
 
 }
