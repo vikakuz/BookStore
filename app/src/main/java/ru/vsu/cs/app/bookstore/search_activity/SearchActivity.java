@@ -7,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +45,7 @@ public class SearchActivity extends Activity {
 
     private GoogleBooksAPIRequest booksAPIRequest;
     RecordsAdapter adapter;
+    ArrayList<BookObject> records = new ArrayList<BookObject>();
 
     private void logOut(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -56,29 +56,36 @@ public class SearchActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        adapter = new RecordsAdapter(SearchActivity.this, R.layout.item_list, records);
+
         text_search = (EditText) findViewById(R.id.text_search);
-        btn_search = (ImageButton) findViewById(R.id.btn_search);
-        statusAndInfo = (TextView) findViewById(R.id.text_empty);
-        recordsList = (ListView) findViewById(R.id.list_search_data);
-        isLoading = (ProgressBar) findViewById(R.id.progress_bar);
-        isLoading.setVisibility(View.INVISIBLE);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        btn_search.setOnClickListener(new View.OnClickListener() {
+        btn_search = (ImageButton) findViewById(R.id.btn_search);btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!(text_search.getText().toString().toUpperCase().startsWith("ВВЕДИТЕ")
                         || text_search.getText().toString().isEmpty())){
                     booksAPIRequest = new GoogleBooksAPIRequest();
-                    booksAPIRequest.execute(text_search.getText().toString().replace("\\s+", "\\s"));
+                    booksAPIRequest.execute(text_search.getText().toString().replace("\\s+", "+"));
+
                 }
 
             }
         });
+
+        statusAndInfo = (TextView) findViewById(R.id.text_search_result);
+        recordsList = (ListView) findViewById(R.id.list_search_data);
+        recordsList.setAdapter(adapter);
+        recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                Intent intent = new Intent(SearchActivity.this, FullInfoActivity.class);
+                intent.putExtra(FullInfoActivity.EXTRA_BOOK, adapter.getItem(pos));
+                startActivity(intent);
+            }
+        });
+
+        isLoading = (ProgressBar) findViewById(R.id.progress_bar);
+
     }
 
     @Override
@@ -104,14 +111,12 @@ public class SearchActivity extends Activity {
     private class GoogleBooksAPIRequest extends AsyncTask<String, Object, String> {
 
         String logs;
-        ArrayList<BookObject> records;
 
         //выполняются в таком же порядке
         @Override
         protected void onPreExecute() {//имеет доступ к UI, по сути для сбора нужной инф-ии
             // Check network connection.
             isLoading.setVisibility(View.VISIBLE);
-            //isLoading.animate();
 
             ConnectivityManager connMngr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMngr.getActiveNetworkInfo();
@@ -131,7 +136,7 @@ public class SearchActivity extends Activity {
             }
 
             //String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=" + params[0];//простой поиск
-            String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=inauthor:" + params[0];
+            String apiUrlString = "https://www.googleapis.com/books/v1/volumes?q=" + params[0];
             try{
                 HttpURLConnection connection = null;
                 // устанавливаем соединение
@@ -165,7 +170,8 @@ public class SearchActivity extends Activity {
                     line = responseReader.readLine();
                 }
                 String responseString = builder.toString();
-                records = new BookObjectParser().parse(responseString);
+                records.clear();
+                records.addAll(new BookObjectParser().parse(responseString));
 
 
                 // Close connection and return response code.
@@ -190,32 +196,15 @@ public class SearchActivity extends Activity {
 
         @Override
         protected void onPostExecute(String jsonObject) {//имеет доступ, для вывода результатов
-            isLoading.setVisibility(View.INVISIBLE);
-
             //должно быть верно
+           // adapter.notifyDataSetChanged();
             if (records != null && !records.isEmpty()) {
-                adapter = new RecordsAdapter(SearchActivity.this, R.layout.item_list, records);
-                recordsList.setAdapter(adapter);
-                recordsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                        Intent intent = new Intent(SearchActivity.this, FullInfoActivity.class);
-                        intent.putExtra(FullInfoActivity.EXTRA_BOOK, adapter.getItem(pos));
-                        startActivity(intent);
-                    }
-                });
                 statusAndInfo.setText("");
             } else {
                 statusAndInfo.setText(R.string.no_records);
                 // logs = "Соответствий не найдено";
             }
-
-//            statusAndInfo.setMaxLines(10);
-//            statusAndInfo.setText(jsonObject);
-            if (!TextUtils.isEmpty(logs)) {
-                logOut(logs);
-            }
-
+            adapter.notifyDataSetChanged();
         }
 
     }
